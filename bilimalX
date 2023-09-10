@@ -17,6 +17,7 @@
 //возвращение + в журнал
 (function() {
     'use strict';
+document.querySelector('.logo-title').textContent = 'v2.0';
 var bilimalXlogo = document.getElementsByTagName('img');
 for (var i = 0;i<bilimalXlogo.length; i++){
   if (bilimalXlogo[i].src.includes('/assets/319dff0f/images/logo.png') && bilimalXlogo[i].alt === 'Электронды мектеп') {
@@ -24,6 +25,7 @@ for (var i = 0;i<bilimalXlogo.length; i++){
     bilimalXlogo[i].alt = 'Script Loaded';
 }
 }
+
     //возвращает + в СОР
     document.querySelectorAll('td.mark.current.sor').forEach((e) => {
         const tasksDiv = e.querySelector('#tasks');
