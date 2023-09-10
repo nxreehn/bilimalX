@@ -1,0 +1,78 @@
+// ==UserScript==
+// @name         BilimalX
+// @namespace    noreehn.
+// @version      2.0
+// @description  Небольшие удобства для работы в электроном журнале school.bilimal.kz
+// @author       https://t.me/noreehn
+// @match        https://school.bilimal.kz/*
+// @icon         https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalXIcon.png
+// @homepageURL  https://github.com/nxreehn/bilimalX/blob/main/README.md
+// @updateURL    https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalX
+// @downloadURL  https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalX
+// @grant GM_setValue
+// @grant GM_getValue
+// @grant GM_setClipboard
+// ==/UserScript==
+
+//возвращение + в журнал
+(function() {
+    'use strict';
+    //возвращает + в СОР
+    document.querySelectorAll('td.mark.current.sor').forEach((e) => {
+        const tasksDiv = e.querySelector('#tasks');
+        if (!e.querySelector('.tooltipster.mark_symbol.is-update') && tasksDiv) {
+            tasksDiv.innerHTML = '<div class="mark-plus">+</div>';
+        } else if (!e.querySelector('.tooltipster.mark_symbol.is-update')) {
+            e.insertAdjacentHTML('beforeend', '<div id="tasks" style="display: flex; align-items: center; justify-content: flex-end; padding: 5px;" data-bg="none"><div class="mark-plus">+</div></div>');
+        }
+    });
+    //возвращает + в СОЧ
+    document.querySelectorAll('td.mark.current.soch').forEach((e) => {
+        const tasksDiv = e.querySelector('#tasks');
+        if (!e.querySelector('.tooltipster.mark_symbol.is-update') && tasksDiv) {
+            tasksDiv.innerHTML = '<div class="mark-plus">+</div>';
+        } else if (!e.querySelector('.tooltipster.mark_symbol.is-update')) {
+            e.insertAdjacentHTML('beforeend', '<div id="tasks" style="display: flex; align-items: center; justify-content: flex-end; padding: 5px;" data-bg="none"><div class="mark-plus">+</div></div>');
+        }
+    });
+    //возвращает + в текущие оценки ФО
+    document.querySelectorAll('td.mark.current').forEach((e) => {
+        const tasksDiv = e.querySelector('#tasks');
+        if (!e.querySelector('.tooltipster.mark_symbol.is-update') && tasksDiv) {
+            tasksDiv.innerHTML = '<div class="mark-plus">+</div>';
+        } else if (!e.querySelector('.tooltipster.mark_symbol.is-update')) {
+            e.insertAdjacentHTML('beforeend', '<div id="tasks" style="display: flex; align-items: center; justify-content: flex-end; padding: 5px;" data-bg="none"><div class="mark-plus">+</div></div>');
+        }
+    });
+})();
+//добавляет кнопку "копировать планы" и сохраняет названия в буфер обмена чтобы потом можно было вставить темы в эксель и загрузить ктп в билимал
+const button = document.createElement('button');
+button.innerText = 'Копировать темы в этой четверти';
+button.classList.add('btn', 'btn-green', 'btn-mini');
+button.style.marginLeft = '4px';
+const targetElement = document.querySelector('.ctp-lplans .btn.btn-green.btn-mini');
+targetElement.parentNode.insertBefore(button, targetElement.nextSibling);
+button.addEventListener('click', function() {
+  const names = document.querySelectorAll(".ctp-view-lplan");
+  const data = [];
+
+  names.forEach(name => {
+    const tagA = name.querySelector('span');
+
+    if (tagA) {
+      const pullRightElement = tagA.querySelector('.pull-right');
+      if (pullRightElement) {
+        pullRightElement.remove();
+      }
+      data.push(tagA.textContent.trim().replace(/^\d+\.\s/, ''));
+    }
+  });
+  const joinedData = data.join('\n');
+  const textarea = document.createElement('textarea');
+  textarea.value = joinedData;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+  alert('Темы успешно скопированы.');
+});
