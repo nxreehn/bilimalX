@@ -17,14 +17,15 @@
 //возвращение + в журнал
 (function() {
     'use strict';
-document.querySelector('.logo-title').textContent = 'v2.0';
+
+//заменяет логотип
 var bilimalXlogo = document.getElementsByTagName('img');
-for (var i = 0;i<bilimalXlogo.length; i++){
-  if (bilimalXlogo[i].src.includes('/assets/319dff0f/images/logo.png') && bilimalXlogo[i].alt === 'Электронды мектеп') {
-    bilimalXlogo[i].src = 'https://raw.githubusercontent.com/nxreehn/bilimalX/main/BlmlXlogo.png';
-    bilimalXlogo[i].alt = 'Script Loaded';
+for (var i = 0; i < bilimalXlogo.length; i++) {
+  bilimalXlogo[i].src = 'https://raw.githubusercontent.com/nxreehn/bilimalX/main/BlmlXlogo.png';
 }
-}
+
+//выводит версию скрипта сразу под логотипом
+document.querySelector('.logo-title').textContent = 'v2.0';
 
     //возвращает + в СОР
     document.querySelectorAll('td.mark.current.sor').forEach((e) => {
