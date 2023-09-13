@@ -102,6 +102,9 @@ newImage.src = "https://raw.githubusercontent.com/nxreehn/bilimalX/main/BilimalX
 newImage.alt = "BilimalX Logo";
 logoElement.textContent = '';
 logoElement.appendChild(newImage);
+newImage.addEventListener('click', function() {
+  window.location.href = '/cabinet_teacher/';
+});
 var styleElement = document.createElement('style');
 styleElement.textContent = `
 @-webkit-keyframes slide-in-blurred-left {
@@ -154,6 +157,7 @@ styleElement.textContent = `
 `;
 
 document.head.appendChild(styleElement);
+
 
 //return pluses to sor
 document.querySelectorAll('td.mark.current.sor').forEach((e) => {
