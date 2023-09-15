@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BilimalX
 // @namespace    noreehn.
-// @version      2.3
+// @version      2.0
 // @description  Небольшие удобства для работы в электроном журнале school.bilimal.kz
 // @author       https://t.me/noreehn
 // @match        https://school.bilimal.kz/*
@@ -189,37 +189,34 @@ document.querySelectorAll('td.mark.current').forEach((e) => {
     }
 });
 
+//create "save all ktp topics" button to copy all topics into clipboard
+const button = document.createElement('button');
+button.innerText = 'Копировать темы в этой четверти';
+button.classList.add('btn', 'btn-green', 'btn-mini');
+button.style.marginLeft = '4px';
+const targetElement = document.querySelector('.ctp-lplans .btn.btn-green.btn-mini');
+targetElement.parentNode.insertBefore(button, targetElement.nextSibling);
+button.addEventListener('click', function() {
+  const names = document.querySelectorAll(".ctp-view-lplan");
+  const data = [];
 
+  names.forEach(name => {
+    const tagA = name.querySelector('span');
 
-document.addEventListener('DOMContentLoaded', function() {
-  const button = document.createElement('button');
-  button.innerText = 'Копировать темы в этой четверти';
-  button.classList.add('btn', 'btn-green', 'btn-mini');
-  button.style.marginLeft = '4px';
-  const targetElement = document.querySelector('.ctp-lplans .btn.btn-green.btn-mini');
-  targetElement.parentNode.insertBefore(button, targetElement.nextSibling);
-  button.addEventListener('click', function() {
-    const names = document.querySelectorAll(".ctp-view-lplan");
-    const data = [];
-
-    names.forEach(name => {
-      const tagA = name.querySelector('span');
-
-      if (tagA) {
-        const pullRightElement = tagA.querySelector('.pull-right');
-        if (pullRightElement) {
-          pullRightElement.remove();
-        }
-        data.push(tagA.textContent.trim().replace(/^\d+\.\s/, ''));
+    if (tagA) {
+      const pullRightElement = tagA.querySelector('.pull-right');
+      if (pullRightElement) {
+        pullRightElement.remove();
       }
-    });
-    const joinedData = data.join('\n');
-    const textarea = document.createElement('textarea');
-    textarea.value = joinedData;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
-    alert('Темы скопированы!');
+      data.push(tagA.textContent.trim().replace(/^\d+\.\s/, ''));
+    }
   });
+  const joinedData = data.join('\n');
+  const textarea = document.createElement('textarea');
+  textarea.value = joinedData;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+  alert('Темы скопированы!');
 });
