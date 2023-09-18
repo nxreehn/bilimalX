@@ -15,14 +15,13 @@
 // ==/UserScript==
 
 //glass header
-const mainHeader = document.querySelector('.main-header');
-mainHeader.style.background = 'rgba(109, 81, 81, 0.15)';
-mainHeader.style.boxShadow = '0 8px 32px 0 rgba(31, 38, 135, 0.37)';
-mainHeader.style.backdropFilter = 'blur(8px)';
-mainHeader.style.webkitBackdropFilter = 'blur(8px)';
-mainHeader.style.borderRadius = '10px';
-mainHeader.style.border = '1px solid rgba(255, 255, 255, 0.18)';
-
+// const mainHeader = document.querySelector('.main-header');
+// mainHeader.style.background = 'rgba(109, 81, 81, 0.15)';
+// mainHeader.style.boxShadow = '0 8px 32px 0 rgba(31, 38, 135, 0.37)';
+// mainHeader.style.backdropFilter = 'blur(8px)';
+// mainHeader.style.webkitBackdropFilter = 'blur(8px)';
+// mainHeader.style.borderRadius = '10px';
+// mainHeader.style.border = '1px solid rgba(255, 255, 255, 0.18)';
 //bell icon remove
 const elementToRemoveBell = document.querySelector('a.fpa_link.main-header-notifications-link.bell');
 if (elementToRemoveBell) {
@@ -34,17 +33,6 @@ const elementToRemoveNotificationIcon = document.querySelector('a.fpa_link.main-
 if (elementToRemoveNotificationIcon) {
     elementToRemoveNotificationIcon.parentNode.removeChild(elementToRemoveNotificationIcon);
 }
-// //title text remove
-// const titleTextRemove = document.querySelector('.logo-title');
-// if (titleTextRemove) {
-//     titleTextRemove.parentNode.removeChild(titleTextRemove);
-// }
-
-// //logo image remove
-// const logoRemove = document.querySelector('.main-header-logo');
-// if (logoRemove) {
-//     logoRemove.parentNode.removeChild(logoRemove);
-// }
 
 //add new animated icon
 const circle = document.createElement('div');
@@ -95,11 +83,11 @@ if (circleElement) {
   });
 }
 
-//new logo
+//new logo animation
 var logoElement = document.querySelector('.main-header-logo');
 var newImage = document.createElement('img');
-newImage.src = "https://raw.githubusercontent.com/nxreehn/bilimalX/main/BilimalXLogo.png";
-newImage.alt = "BilimalX Logo";
+newImage.src = "/assets/5a419721/images/logo.png";
+newImage.alt = "Bilimal Logo";
 logoElement.textContent = '';
 logoElement.appendChild(newImage);
 newImage.addEventListener('click', function() {
@@ -151,13 +139,12 @@ styleElement.textContent = `
 
 .main-header-logo img {
   animation: slide-in-blurred-left 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
-  width: 200px;
-  height: auto; 
+  width: 100px;
+  height: auto;
 }
 `;
 
 document.head.appendChild(styleElement);
-
 
 //return pluses to sor
 document.querySelectorAll('td.mark.current.sor').forEach((e) => {
@@ -193,7 +180,7 @@ document.querySelectorAll('td.mark.current').forEach((e) => {
 function addCopyButton() {
   const existingButton = document.querySelector('.btn-copy-topics');
   if (existingButton) {
-    return; // Если кнопка уже существует, не добавляем новую
+    return;
   }
 
   const button = document.createElement('button');
