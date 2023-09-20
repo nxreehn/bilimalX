@@ -139,7 +139,7 @@ styleElement.textContent = `
 
 .main-header-logo img {
   animation: slide-in-blurred-left 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
-  width: 100px;
+  width: 160px;
   height: auto;
 }
 `;
@@ -176,63 +176,82 @@ document.querySelectorAll('td.mark.current').forEach((e) => {
     }
 });
 
-//create "save all ktp topics" button to copy all topics into clipboard
-function addCopyButton() {
-  const existingButton = document.querySelector('.btn-copy-topics');
-  if (existingButton) {
-    return;
+//sweetalert2
+var sweetalert2 = document.createElement('script');
+sweetalert2.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+document.head.appendChild(sweetalert2);
+
+sweetalert2.onload = function() {
+
+  // Заменяем вывод alert на SweetAlert2
+  function showAlert() {
+    Swal.fire({
+      title: 'Темы удачно скопированы!',
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
   }
 
-  const button = document.createElement('button');
-  button.innerText = 'Копировать темы в этой четверти';
-  button.classList.add('btn', 'btn-green', 'btn-mini', 'btn-copy-topics');
-  button.style.marginLeft = '4px';
-  button.addEventListener('click', function() {
-    const names = document.querySelectorAll(".ctp-view-lplan");
-    const data = [];
+  function addCopyButton() {
+    const existingButton = document.querySelector('.btn-copy-topics');
+    if (existingButton) {
+      return;
+    }
 
-    names.forEach(name => {
-      const tagA = name.querySelector('span');
+    const button = document.createElement('button');
+    button.innerText = 'Копировать темы с этой четверти';
+    button.classList.add('btn', 'btn-green', 'btn-mini', 'btn-copy-topics');
+    button.style.marginLeft = '4px';
+    button.addEventListener('click', function() {
+      const names = document.querySelectorAll(".ctp-view-lplan");
+      const data = [];
 
-      if (tagA) {
-        const pullRightElement = tagA.querySelector('.pull-right');
-        if (pullRightElement) {
-          pullRightElement.remove();
+      names.forEach(name => {
+        const tagA = name.querySelector('span');
+
+        if (tagA) {
+          const pullRightElement = tagA.querySelector('.pull-right');
+          if (pullRightElement) {
+            pullRightElement.remove();
+          }
+          data.push(tagA.textContent.trim().replace(/^\d+\.\s/, ''));
         }
-        data.push(tagA.textContent.trim().replace(/^\d+\.\s/, ''));
+      });
+      const joinedData = data.join('\n');
+      const textarea = document.createElement('textarea');
+      textarea.value = joinedData;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showAlert();
+    });
+
+    const targetElement = document.querySelector('.ctp-lplans .btn.btn-green.btn-mini');
+    if (targetElement) {
+      targetElement.parentNode.insertBefore(button, targetElement.nextSibling);
+    }
+  }
+
+  addCopyButton();
+
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.addedNodes) {
+        for (let i = 0; i < mutation.addedNodes.length; i++) {
+          const node = mutation.addedNodes[i];
+          if (node.classList && node.classList.contains('ctp-view-lplan')) {
+            addCopyButton();
+            break;
+          }
+        }
       }
     });
-    const joinedData = data.join('\n');
-    const textarea = document.createElement('textarea');
-    textarea.value = joinedData;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
-    alert('Темы скопированы!');
   });
 
-  const targetElement = document.querySelector('.ctp-lplans .btn.btn-green.btn-mini');
-  if (targetElement) {
-    targetElement.parentNode.insertBefore(button, targetElement.nextSibling);
-  }
-}
+  const config = { childList: true, subtree: true };
+  observer.observe(document.body, config);
 
-addCopyButton();
-
-const observer = new MutationObserver(function(mutations) {
-  mutations.forEach(function(mutation) {
-    if (mutation.addedNodes) {
-      for (let i = 0; i < mutation.addedNodes.length; i++) {
-        const node = mutation.addedNodes[i];
-        if (node.classList && node.classList.contains('ctp-view-lplan')) {
-          addCopyButton();
-          break;
-        }
-      }
-    }
-  });
-});
-
-const config = { childList: true, subtree: true };
-observer.observe(document.body, config);
+};
