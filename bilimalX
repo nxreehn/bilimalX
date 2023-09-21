@@ -86,7 +86,7 @@ if (circleElement) {
 //new logo animation
 var logoElement = document.querySelector('.main-header-logo');
 var newImage = document.createElement('img');
-newImage.src = "/assets/5a419721/images/logo.png";
+newImage.src = "https://raw.githubusercontent.com/nxreehn/bilimalX/main/logo.png";
 newImage.alt = "Bilimal Logo";
 logoElement.textContent = '';
 logoElement.appendChild(newImage);
