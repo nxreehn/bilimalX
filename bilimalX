@@ -255,3 +255,88 @@ sweetalert2.onload = function() {
   observer.observe(document.body, config);
 
 };
+
+//     // Проверяем, есть ли предпочтение пользователя в localStorage
+//     var darkModeEnabled = localStorage.getItem('darkModeEnabled') === 'true';
+
+//     function enableDarkMode() {
+//         darkModeEnabled = true;
+//         document.documentElement.style.filter = "invert(1) hue-rotate(180deg)";
+//         localStorage.setItem('darkModeEnabled', 'true');
+//     }
+
+//     function disableDarkMode() {
+//         darkModeEnabled = false;
+//         document.documentElement.style.filter = "none";
+//         localStorage.setItem('darkModeEnabled', 'false');
+//     }
+
+//     function toggleDarkMode() {
+//         if (darkModeEnabled) {
+//             disableDarkMode();
+//         } else {
+//             enableDarkMode();
+//         }
+//     }
+
+//     // Добавляем кнопку рядом с кнопкой "btn btn-orange"
+//     function addDarkModeButton() {
+//         var orangeButton = document.querySelector('.btn.btn-orange');
+//         if (orangeButton) {
+//             var darkModeButton = document.createElement('button');
+//             darkModeButton.innerText = 'Toggle Dark Mode';
+//             darkModeButton.classList.add('btn');
+//             darkModeButton.classList.add('btn-dark-mode');
+//             darkModeButton.style.marginLeft = '10px';
+//             darkModeButton.addEventListener('click', toggleDarkMode);
+//             orangeButton.parentNode.insertBefore(darkModeButton, orangeButton.nextSibling);
+//         }
+//     }
+
+//     if (darkModeEnabled) {
+//         enableDarkMode();
+//     }
+
+//     addDarkModeButton();
+
+var darkModeEnabled = localStorage.getItem('darkModeEnabled') === 'true';
+
+function enableDarkMode() {
+    darkModeEnabled = true;
+    document.documentElement.style.filter = "invert(1) hue-rotate(180deg)";
+    localStorage.setItem('darkModeEnabled', 'true');
+}
+
+function disableDarkMode() {
+    darkModeEnabled = false;
+    document.documentElement.style.filter = "none";
+    localStorage.setItem('darkModeEnabled', 'false');
+}
+
+function toggleDarkMode() {
+    if (darkModeEnabled) {
+        disableDarkMode();
+    } else {
+        enableDarkMode();
+    }
+}
+
+function addDarkModeButton() {
+    var darkModeButton = document.createElement('button');
+    darkModeButton.innerText = '🌞/🌚';
+    darkModeButton.classList.add('btn');
+    darkModeButton.classList.add('btn-dark-mode');
+    darkModeButton.style.marginRight = '10px';
+    darkModeButton.addEventListener('click', toggleDarkMode);
+
+    var circleElement = document.querySelector('.circle');
+    if (circleElement) {
+        circleElement.parentNode.insertBefore(darkModeButton, circleElement);
+    }
+}
+
+if (darkModeEnabled) {
+    enableDarkMode();
+}
+
+addDarkModeButton();
