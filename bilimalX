@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BilimalX
 // @namespace    noreehn.
-// @version      2.0
+// @version      2.1
 // @description  Небольшие удобства для работы в электроном журнале school.bilimal.kz
 // @author       https://t.me/noreehn
 // @match        https://school.bilimal.kz/*
@@ -14,27 +14,21 @@
 // @grant GM_setClipboard
 // ==/UserScript==
 
-//glass header
-// const mainHeader = document.querySelector('.main-header');
-// mainHeader.style.background = 'rgba(109, 81, 81, 0.15)';
-// mainHeader.style.boxShadow = '0 8px 32px 0 rgba(31, 38, 135, 0.37)';
-// mainHeader.style.backdropFilter = 'blur(8px)';
-// mainHeader.style.webkitBackdropFilter = 'blur(8px)';
-// mainHeader.style.borderRadius = '10px';
-// mainHeader.style.border = '1px solid rgba(255, 255, 255, 0.18)';
-//bell icon remove
+const mainHeader = document.querySelector('.main-header');
+mainHeader.style.background = 'rgba(109, 81, 81, 0.15)';
+mainHeader.style.boxShadow = '0 8px 32px 0 rgba(31, 38, 135, 0.37)';
+mainHeader.style.backdropFilter = 'blur(8px)';
+mainHeader.style.webkitBackdropFilter = 'blur(8px)';
+mainHeader.style.borderRadius = '10px';
+mainHeader.style.border = '1px solid rgba(255, 255, 255, 0.18)';
 const elementToRemoveBell = document.querySelector('a.fpa_link.main-header-notifications-link.bell');
 if (elementToRemoveBell) {
     elementToRemoveBell.parentNode.removeChild(elementToRemoveBell);
 }
-
-//notification icon remove
 const elementToRemoveNotificationIcon = document.querySelector('a.fpa_link.main-header-notifications-link');
 if (elementToRemoveNotificationIcon) {
     elementToRemoveNotificationIcon.parentNode.removeChild(elementToRemoveNotificationIcon);
 }
-
-//add new animated icon
 const circle = document.createElement('div');
 circle.classList.add('circle');
 circle.style.width = '50px';
@@ -82,8 +76,6 @@ if (circleElement) {
     window.location.href = '/cabinet_teacher/notification';
   });
 }
-
-//new logo animation
 var logoElement = document.querySelector('.main-header-logo');
 var newImage = document.createElement('img');
 newImage.src = "https://raw.githubusercontent.com/nxreehn/bilimalX/main/logo.png";
@@ -143,10 +135,7 @@ styleElement.textContent = `
   height: auto;
 }
 `;
-
 document.head.appendChild(styleElement);
-
-//return pluses to sor
 document.querySelectorAll('td.mark.current.sor').forEach((e) => {
     const tasksDiv = e.querySelector('#tasks');
     if (!e.querySelector('.tooltipster.mark_symbol.is-update') && tasksDiv) {
@@ -155,8 +144,6 @@ document.querySelectorAll('td.mark.current.sor').forEach((e) => {
         e.insertAdjacentHTML('beforeend', '<div id="tasks" style="display: flex; align-items: center; justify-content: flex-end; padding: 5px;" data-bg="none"><div class="mark-plus">+</div></div>');
     }
 });
-
-//return pluses to soch
 document.querySelectorAll('td.mark.current.soch').forEach((e) => {
     const tasksDiv = e.querySelector('#tasks');
     if (!e.querySelector('.tooltipster.mark_symbol.is-update') && tasksDiv) {
@@ -165,8 +152,6 @@ document.querySelectorAll('td.mark.current.soch').forEach((e) => {
         e.insertAdjacentHTML('beforeend', '<div id="tasks" style="display: flex; align-items: center; justify-content: flex-end; padding: 5px;" data-bg="none"><div class="mark-plus">+</div></div>');
     }
 });
-
-//return all pluses
 document.querySelectorAll('td.mark.current').forEach((e) => {
     const tasksDiv = e.querySelector('#tasks');
     if (!e.querySelector('.tooltipster.mark_symbol.is-update') && tasksDiv) {
@@ -175,15 +160,11 @@ document.querySelectorAll('td.mark.current').forEach((e) => {
         e.insertAdjacentHTML('beforeend', '<div id="tasks" style="display: flex; align-items: center; justify-content: flex-end; padding: 5px;" data-bg="none"><div class="mark-plus">+</div></div>');
     }
 });
-
-//sweetalert2
 var sweetalert2 = document.createElement('script');
 sweetalert2.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
 document.head.appendChild(sweetalert2);
 
 sweetalert2.onload = function() {
-
-  // Заменяем вывод alert на SweetAlert2
   function showAlert() {
     Swal.fire({
       title: 'Темы удачно скопированы!',
@@ -256,87 +237,80 @@ sweetalert2.onload = function() {
 
 };
 
-//     // Проверяем, есть ли предпочтение пользователя в localStorage
-//     var darkModeEnabled = localStorage.getItem('darkModeEnabled') === 'true';
+var darkReaderScript = document.createElement('script');
+darkReaderScript.src = 'https://cdn.jsdelivr.net/npm/darkreader@4.9.58/darkreader.min.js';
 
-//     function enableDarkMode() {
-//         darkModeEnabled = true;
-//         document.documentElement.style.filter = "invert(1) hue-rotate(180deg)";
-//         localStorage.setItem('darkModeEnabled', 'true');
-//     }
-
-//     function disableDarkMode() {
-//         darkModeEnabled = false;
-//         document.documentElement.style.filter = "none";
-//         localStorage.setItem('darkModeEnabled', 'false');
-//     }
-
-//     function toggleDarkMode() {
-//         if (darkModeEnabled) {
-//             disableDarkMode();
-//         } else {
-//             enableDarkMode();
-//         }
-//     }
-
-//     // Добавляем кнопку рядом с кнопкой "btn btn-orange"
-//     function addDarkModeButton() {
-//         var orangeButton = document.querySelector('.btn.btn-orange');
-//         if (orangeButton) {
-//             var darkModeButton = document.createElement('button');
-//             darkModeButton.innerText = 'Toggle Dark Mode';
-//             darkModeButton.classList.add('btn');
-//             darkModeButton.classList.add('btn-dark-mode');
-//             darkModeButton.style.marginLeft = '10px';
-//             darkModeButton.addEventListener('click', toggleDarkMode);
-//             orangeButton.parentNode.insertBefore(darkModeButton, orangeButton.nextSibling);
-//         }
-//     }
-
-//     if (darkModeEnabled) {
-//         enableDarkMode();
-//     }
-
-//     addDarkModeButton();
-
-var darkModeEnabled = localStorage.getItem('darkModeEnabled') === 'true';
-
-function enableDarkMode() {
-    darkModeEnabled = true;
-    document.documentElement.style.filter = "invert(1) hue-rotate(180deg)";
-    localStorage.setItem('darkModeEnabled', 'true');
-}
-
-function disableDarkMode() {
-    darkModeEnabled = false;
-    document.documentElement.style.filter = "none";
-    localStorage.setItem('darkModeEnabled', 'false');
-}
+var darkModeToggle = document.createElement('button');
+darkModeToggle.innerText = '🌚/🌞';
+darkModeToggle.classList.add('btn');
+darkModeToggle.classList.add('btn-orange');
+darkModeToggle.style.marginTop = '6px';
+darkModeToggle.addEventListener('click', toggleDarkMode);
 
 function toggleDarkMode() {
-    if (darkModeEnabled) {
-        disableDarkMode();
+    if (DarkReader.isEnabled()) {
+        DarkReader.disable();
+        localStorage.setItem('darkMode', 'false');
     } else {
-        enableDarkMode();
+        DarkReader.enable({
+            brightness: 100,
+            contrast: 90,
+            sepia: 10
+        });
+        localStorage.setItem('darkMode', 'true');
     }
 }
 
-function addDarkModeButton() {
-    var darkModeButton = document.createElement('button');
-    darkModeButton.innerText = '🌞/🌚';
-    darkModeButton.classList.add('btn');
-    darkModeButton.classList.add('btn-dark-mode');
-    darkModeButton.style.marginRight = '10px';
-    darkModeButton.addEventListener('click', toggleDarkMode);
-
+darkReaderScript.onload = function() {
     var circleElement = document.querySelector('.circle');
     if (circleElement) {
-        circleElement.parentNode.insertBefore(darkModeButton, circleElement);
+        var toggleContainer = document.createElement('div');
+        toggleContainer.classList.add('toggle-container');
+
+        var toggleSwitch = document.createElement('div');
+        toggleSwitch.classList.add('toggle-slider');
+
+        toggleSwitch.appendChild(darkModeToggle);
+        toggleContainer.appendChild(toggleSwitch);
+        circleElement.parentElement.insertBefore(toggleContainer, circleElement);
+
+        var darkMode = localStorage.getItem('darkMode');
+        if (darkMode === 'true') {
+            DarkReader.enable({
+                brightness: 100,
+                contrast: 90,
+                sepia: 10
+            });
+        }
     }
-}
+};
 
-if (darkModeEnabled) {
-    enableDarkMode();
-}
+document.head.appendChild(darkReaderScript);
 
-addDarkModeButton();
+const aboutScriptImage = document.createElement('img');
+aboutScriptImage.src = 'https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalXIcon.png';
+aboutScriptImage.style.width = '21px';
+aboutScriptImage.style.height = '21px';
+
+const rowElement = document.querySelector('.main-header-logo');
+
+rowElement.appendChild(aboutScriptImage);
+
+aboutScriptImage.addEventListener('click', () => {
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.9/push.min.js';
+    script.onload = () => {
+        Push.create('Что умеет BilimalX', {
+            body: 'Нажмите на это уведомление, чтобы посмотреть текущие возможности BilimalX',
+            icon: 'https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalXIcon.png',
+            timeout: 4000,
+            onClick: function () {
+                window.open('https://github.com/nxreehn/bilimalX/blob/main/about.md', '_blank');
+                window.focus();
+                this.close();
+            }
+        });
+    };
+
+    document.head.appendChild(script);
+});
