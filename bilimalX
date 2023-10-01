@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BilimalX
 // @namespace    noreehn.
-// @version      2.2
+// @version      2.1
 // @description  Небольшие удобства для работы в электроном журнале school.bilimal.kz
 // @author       https://t.me/noreehn
 // @match        https://school.bilimal.kz/*
@@ -311,6 +311,8 @@ aboutScriptImage.addEventListener('click', () => {
             }
         });
     };
+    document.head.appendChild(script);
+});
 var decorationLeft = document.querySelectorAll('.decoration-left');
 decorationLeft.forEach(function(element) {
     element.remove();
@@ -318,6 +320,4 @@ decorationLeft.forEach(function(element) {
 var decorationRight = document.querySelectorAll('.decoration-right');
 decorationRight.forEach(function(element) {
     element.remove();
-});
-    document.head.appendChild(script);
 });
