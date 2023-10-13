@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         BilimalX
+// @name         BilimalPlus
 // @namespace    noreehn.
-// @version      2.1
+// @version      2.2
 // @description  Небольшие удобства для работы в электроном журнале school.bilimal.kz
 // @author       https://t.me/noreehn
 // @match        https://school.bilimal.kz/*
@@ -13,7 +13,6 @@
 // @grant GM_getValue
 // @grant GM_setClipboard
 // ==/UserScript==
-
 const mainHeader = document.querySelector('.main-header');
 mainHeader.style.background = 'rgba(109, 81, 81, 0.15)';
 mainHeader.style.boxShadow = '0 8px 32px 0 rgba(31, 38, 135, 0.37)';
@@ -21,6 +20,8 @@ mainHeader.style.backdropFilter = 'blur(8px)';
 mainHeader.style.webkitBackdropFilter = 'blur(8px)';
 mainHeader.style.borderRadius = '10px';
 mainHeader.style.border = '1px solid rgba(255, 255, 255, 0.18)';
+
+//выбираем дефолтную иконку уведомлений на новую с анимациями
 const elementToRemoveBell = document.querySelector('a.fpa_link.main-header-notifications-link.bell');
 if (elementToRemoveBell) {
     elementToRemoveBell.parentNode.removeChild(elementToRemoveBell);
@@ -76,6 +77,8 @@ if (circleElement) {
     window.location.href = '/cabinet_teacher/notification';
   });
 }
+
+//меняем изначальный логотип билимала на другой с анимацией
 var logoElement = document.querySelector('.main-header-logo');
 var newImage = document.createElement('img');
 newImage.src = "https://raw.githubusercontent.com/nxreehn/bilimalX/main/logo.png";
@@ -136,6 +139,8 @@ styleElement.textContent = `
 }
 `;
 document.head.appendChild(styleElement);
+
+//тут добавляем плюсик к сорам
 document.querySelectorAll('td.mark.current.sor').forEach((e) => {
     const tasksDiv = e.querySelector('#tasks');
     if (!e.querySelector('.tooltipster.mark_symbol.is-update') && tasksDiv) {
@@ -144,6 +149,8 @@ document.querySelectorAll('td.mark.current.sor').forEach((e) => {
         e.insertAdjacentHTML('beforeend', '<div id="tasks" style="display: flex; align-items: center; justify-content: flex-end; padding: 5px;" data-bg="none"><div class="mark-plus">+</div></div>');
     }
 });
+
+//плюсик для соч
 document.querySelectorAll('td.mark.current.soch').forEach((e) => {
     const tasksDiv = e.querySelector('#tasks');
     if (!e.querySelector('.tooltipster.mark_symbol.is-update') && tasksDiv) {
@@ -152,6 +159,8 @@ document.querySelectorAll('td.mark.current.soch').forEach((e) => {
         e.insertAdjacentHTML('beforeend', '<div id="tasks" style="display: flex; align-items: center; justify-content: flex-end; padding: 5px;" data-bg="none"><div class="mark-plus">+</div></div>');
     }
 });
+
+//плюсик ко всем текущим оценкам
 document.querySelectorAll('td.mark.current').forEach((e) => {
     const tasksDiv = e.querySelector('#tasks');
     if (!e.querySelector('.tooltipster.mark_symbol.is-update') && tasksDiv) {
@@ -160,10 +169,13 @@ document.querySelectorAll('td.mark.current').forEach((e) => {
         e.insertAdjacentHTML('beforeend', '<div id="tasks" style="display: flex; align-items: center; justify-content: flex-end; padding: 5px;" data-bg="none"><div class="mark-plus">+</div></div>');
     }
 });
+
+//тут подключаем библиотеку свиталёртс чтобы показывать модальные окна
 var sweetalert2 = document.createElement('script');
 sweetalert2.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
 document.head.appendChild(sweetalert2);
 
+//тут указываем разновидность модального окна (можно взять на сайте свиталёртс)
 sweetalert2.onload = function() {
   function showAlert() {
     Swal.fire({
@@ -175,6 +187,7 @@ sweetalert2.onload = function() {
 
   }
 
+//создаем кнопку сохранить планы из ктп (для вставки в эксель)
   function addCopyButton() {
     const existingButton = document.querySelector('.btn-copy-topics');
     if (existingButton) {
@@ -237,6 +250,7 @@ sweetalert2.onload = function() {
 
 };
 
+//темная тема, ну, и все типа (кнопка переключения)
 var darkReaderScript = document.createElement('script');
 darkReaderScript.src = 'https://cdn.jsdelivr.net/npm/darkreader@4.9.58/darkreader.min.js';
 
@@ -287,6 +301,7 @@ darkReaderScript.onload = function() {
 
 document.head.appendChild(darkReaderScript);
 
+//выводим иконку плюсика справа от логотипа при клике на который будет показывается окно с уведомлением что удачно установлено расширение
 const aboutScriptImage = document.createElement('img');
 aboutScriptImage.src = 'https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalXIcon.png';
 aboutScriptImage.style.width = '21px';
@@ -296,23 +311,19 @@ const rowElement = document.querySelector('.main-header-logo');
 
 rowElement.appendChild(aboutScriptImage);
 
+//само окно уведолмения при клике на иконку плюсика
 aboutScriptImage.addEventListener('click', () => {
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.9/push.min.js';
-    script.onload = () => {
-        Push.create('Что умеет BilimalX', {
-            body: 'Нажмите на это уведомление, чтобы посмотреть текущие возможности BilimalX',
-            icon: 'https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalXIcon.png',
-            timeout: 4000,
-            onClick: function () {
-                window.open('https://github.com/nxreehn/bilimalX/blob/main/about.md', '_blank');
-                window.focus();
-                this.close();
-            }
-        });
-    };
-    document.head.appendChild(script);
+  Swal.fire({
+    title: 'Поздравляю!',
+    text: 'Расширение BilimalPlus успешно установлено! Нажмите на иконку расширения в меню расширений браузера чтобы узнать об основных возможностях этого расширения.',
+    imageUrl: 'https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalpluslogo.png',
+    imageWidth: 800,
+    imageHeight: 110,
+    imageAlt: 'BilimalPlus logo',
+  });
 });
+
+//эта функция больше для праздничных дней. чтобы убрать картинки по краям в верхней панели сайта
 var decorationLeft = document.querySelectorAll('.decoration-left');
 decorationLeft.forEach(function(element) {
     element.remove();
