@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilimal Plus
 // @namespace    noreehn.
-// @version      2.3.1
+// @version      2.3.2
 // @description  Небольшие удобства для работы в электроном журнале school.bilimal.kz
 // @author       https://t.me/noreehn
 // @match        https://school.bilimal.kz/*
