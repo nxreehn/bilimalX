@@ -1,0 +1,39 @@
+// ==UserScript==
+// @name         Bili[Broken]
+// @namespace    noreehn.
+// @version      ¯\_(ツ)_/¯
+// @description  ¯\_(ツ)_/¯
+// @author       https://t.me/noreehn
+// @match        https://school.bilimal.kz/*
+// @icon         https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalXIcon.png
+// @updateURL    https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalX
+// @downloadURL  https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalX
+// @grant GM_setValue
+// @grant GM_getValue
+// @grant GM_setClipboard
+// ==/UserScript==
+   
+   if (!localStorage.getItem('scriptRemoved')) {
+        alert('Скрипт удален');
+        var checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'removeScriptCheckbox';
+        var label = document.createElement('label');
+        label.htmlFor = 'removeScriptCheckbox';
+        label.appendChild(document.createTextNode('Не показывать это уведомление снова'));
+        var okButton = document.createElement('button');
+        okButton.appendChild(document.createTextNode('OK'));
+        document.body.appendChild(checkbox);
+        document.body.appendChild(label);
+        document.body.appendChild(okButton);
+        okButton.addEventListener('click', function () {
+          
+            if (checkbox.checked) {
+                
+                localStorage.setItem('scriptRemoved', 'true');
+            }
+
+          
+            alert('Уведомление закрыто');
+        });
+    }
