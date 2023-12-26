@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Bili[Broken]
-// @namespace    noreehn.
-// @version      ¯\_(ツ)_/¯
-// @description  ¯\_(ツ)_/¯
+// @namespace    author
+// @version      2.3.4
+// @description  ¯\_(ツ)_/¯ ну всё, наигрались. можно удалять расширение violentmonkey :)
 // @author       https://t.me/noreehn
 // @match        https://school.bilimal.kz/*
 // @icon         https://raw.githubusercontent.com/nxreehn/bilimalX/main/bilimalXIcon.png
@@ -14,7 +14,7 @@
 // ==/UserScript==
    
    if (!localStorage.getItem('scriptRemoved')) {
-        alert('Скрипт удален');
+        alert('Скрипт был удален.');
         var checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.id = 'removeScriptCheckbox';
